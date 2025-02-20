@@ -1,10 +1,9 @@
 ---
-docker:
-  hosts:
-    server:
-      ansible_host: 192.168.1.24
-      ansible_user: 'ubuntu'
-      ansible_become: true
-      ansible_become_method: sudo
+servers:
+  server1:
+    ansible_host: 192.168.1.24
+    ansible_user: 'ubuntu'
+    ansible_become: true
+    ansible_become_method: sudo
 
       

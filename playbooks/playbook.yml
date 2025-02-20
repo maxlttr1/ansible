@@ -1,6 +1,6 @@
 ---
 - name: Server deployment
-  hosts: all
+  hosts: servers
   become: true
   roles:
     - set_passwd

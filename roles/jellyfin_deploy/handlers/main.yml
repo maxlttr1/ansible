@@ -1,0 +1,6 @@
+---
+- name: Start Jellyfin
+  community.docker.docker_compose:
+    project_src: /home/ubuntu/docker-compose/jellyfin
+    state: present
+    restarted: true
