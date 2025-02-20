@@ -1,0 +1,9 @@
+---
+- name: Modifying the user settings
+  ansible.builtin.user:
+    append: true
+    create_home: true
+    groups: 
+      - sudo 
+    name: ubuntu
+    password: $6$WZqxGFbjMAnfUc5Q$G2uUNEQwvrFZEGX7Rr8j5KxEE0FVK/9zqWtEpRiySqxZ6g4sQe1dQq8mIbUqKoS.PTHhNwypIjccvSSYSzYHn

@@ -1,0 +1,32 @@
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Set incoming rules
+  ufw:
+    default: deny
+    direction: incoming
+    state: enabled
+
+- name: Set outgoing rules
+  ufw:
+    default: allow
+    direction: outgoing
+    state: enabled
+
+- name: Allow SSH connections
+  ufw:
+    rule: allow
+    name: ssh
+
+- name: Allow HTTP traffic
+  ufw:
+    rule: allow
+    name: http
+
+- name: Allow HTTPS traffic
+  ufw:
+    rule: allow
+    name: https

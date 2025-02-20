@@ -1,0 +1,10 @@
+---
+- name: Server deployment
+  hosts: all
+  become: true
+  roles:
+    - set_passwd
+    - configure_firewall
+    - configure_ssh
+    - docker_install
+    - portainer_deploy
