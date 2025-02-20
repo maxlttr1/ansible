@@ -8,3 +8,5 @@
     - configure_ssh
     - docker_install
     - portainer_deploy
+
+  # ansible-playbook -i inventory.yml playbook.yml --ask-vault-pass

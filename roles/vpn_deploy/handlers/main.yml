@@ -1,0 +1,6 @@
+---
+- name: Start vpn
+  community.docker.docker_compose:
+    project_src: /home/ubuntu/docker-compose/vpn
+    state: present
+    restarted: true

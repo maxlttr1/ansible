@@ -1,0 +1,36 @@
+---
+- name: Ensure docker-compose is installed
+  ansible.builtin.apt:
+    name: docker-compose-plugin
+    state: present
+
+- name: Ensure Docker service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Setup vpn directory
+  ansible.builtin.file:
+    path: /home/ubuntu/docker-compose/vpn
+    state: directory
+    mode: '0755'
+    owner: ubuntu  
+    group: ubuntu
+
+- name: Deploy vpn using Docker Compose
+  vars_files:
+    - "{{ role_path }}/vars/secrets.yml"
+  ansible.builtin.template:
+    src: "templates/docker_compose.yaml.j2"
+    dest: "/home/ubuntu/docker-compose/vpn/docker-compose.yaml"
+    mode: '0755'
+    owner: ubuntu
+    group: ubuntu
+  notify:
+    - Start vpn
+
+- name: Run vpn docker-compose up
+  community.docker.docker_compose:
+    project_src: /home/ubuntu/docker-compose/vpn
+    state: present
