@@ -5,28 +5,31 @@
     update_cache: yes
 
 - name: Set incoming rules
-  ufw:
+  community.general.ufw:
     default: deny
     direction: incoming
     state: enabled
 
 - name: Set outgoing rules
-  ufw:
+  community.general.ufw:
     default: allow
     direction: outgoing
     state: enabled
 
 - name: Allow SSH connections
-  ufw:
-    rule: allow
-    name: ssh
+  community.general.ufw:
+    rule: limit
+    port: '22'
+    state: enabled
 
 - name: Allow HTTP traffic
-  ufw:
+  community.general.ufw:
     rule: allow
-    name: http
+    port: '80'
+    state: enabled
 
 - name: Allow HTTPS traffic
-  ufw:
+  community.general.ufw:
     rule: allow
-    name: https
+    port: '443'
+    state: enabled
