@@ -1,0 +1,11 @@
+---
+- name: Server deployment
+  hosts: all
+  become: true
+  roles:
+    #- configure_firewall
+    - configure_ssh
+    #- docker_install
+    #- portainer_deploy
+
+  # ansible-playbook -i inventory.yml playbook.yml --ask-become-pass --ask-vault-pass

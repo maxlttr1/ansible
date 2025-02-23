@@ -1,35 +1,45 @@
-- name: Install ufw
+- name: Install OpenSSH Server
   ansible.builtin.apt:
-    name: ufw
+    name: openssh-server
     state: present
     update_cache: yes
 
-- name: Set incoming rules
-  community.general.ufw:
-    default: deny
-    direction: incoming
-    state: enabled
+- name: Configure SSHD Config to Disable Root Login
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify:
+    - Restart SSH
 
-- name: Set outgoing rules
-  community.general.ufw:
-    default: allow
-    direction: outgoing
-    state: enabled
+- name: Disable password authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  notify:
+    - Restart SSH
 
-- name: Allow SSH connections
-  community.general.ufw:
-    rule: limit
-    port: '22'
-    state: enabled
+- name: Disable login for users with empty passwords
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+  notify:
+    - Restart SSH
 
-- name: Allow HTTP traffic
-  community.general.ufw:
-    rule: allow
-    port: '80'
-    state: enabled
+- name: Configure SSH to Allow Only Specific Users
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?AllowUsers'
+    line: 'AllowUsers ubuntu'
+  notify:
+    - Restart SSH
 
-- name: Allow HTTPS traffic
-  community.general.ufw:
-    rule: allow
-    port: '443'
-    state: enabled
+- name: Ensure SSH service is running and enabled
+  ansible.builtin.service:
+    name: ssh
+    state: started
+    enabled: yes
+
+
